@@ -225,148 +225,206 @@
                                                 <input type="text" class="form-control" v-model=" inputMesa">
                                             </div>
 
-
                                         </div> <!-- fim boby -->
                                     </div> <!-- fim card -->
+
                                 </div>
                             </div>
                         </div>
+                    </div>
 
+                    <div class="row mt-2">
+                        <div class="col d-flex justify-content-between">
+                            <button type="button" class="btn btn-warning" @click="etapa -= 1">
+                                Editar o Lanche
+                            </button>
 
-                        <div class="row mt-2">
-                            <div class="col d-flex justify-content-between">
+                            <button type="button" class="btn btn-success" @click="confirmarPedido()">
+                                Confirmar
+                            </button>
+                        </div>
+                    </div>
 
-                                <button type="button" class="btn btn-warning" @click="etapa -= 1">
-                                    Editar o Lanche
-                                </button>
+                </div> <!-- Fim Etapa 2 -->
 
-                                <button type="button" class="btn btn-success" @click="confirmarPedido()">
-                                    Confirmar
-                                </button>
-                            </div>
+                <!-- Repetir pedido -->
+                <!-- Etapa == 3 -->
+                <div class="col-md-6" v-if="etapa == 3">
+                    <!-- Pedido Confirmado -->
+                    <div class="row mt-2">
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-header">
+                                    Pedido Confirmado
+                                </div>
+
+                                <div class="card-body">
+                                    <p>Agora é só aguardar</p>
+                                    <p>Vamos levar o pedido até você.</p>
+                                </div>
+                            </div> <!-- Fim Card -->
+                        </div>
+                    </div> <!-- Fim Pedido Confirmado -->
+
+                    <div class="row mt-2">
+                        <div class="col d-flex justify-content-between">
+
+                            <!-- Botão 1 Repetir o pedido -->
+
+                            <button class="btn btn-dark" type="button" @click="etapa = 1">
+                                Repetir Pedido
+                            </button>
+
+                            <!-- Botão 2 Novo Pedido -->
+
+                            <button class="btn btn-success" type="button" @click="novoPedido()">
+                                Novo Pedido
+                            </button>
 
                         </div>
+                    </div>
 
-                    </div> <!-- Fim Etapa 2 -->
-
-                </div> <!-- fim ROW -->
-            </div> <!-- FIM APP -->
-        </div> <!-- FIM container -->
-
-        <!-- instancia VUE -->
-        <script>
-            const vm = new Vue({
-                el: '#app',
-
-                data: {  // atributos // propriedades
-                    inputTipoPao: '', /* RADIO = OBRIGATÓRIO */
-                    inputSalada: [], /* CHECKBOX = NAO OBRIGATORIO/OPCIONAL */
-                    inputMolhos: [],
-                    inputBurger: '',
-                    etapa: 1,
-                    inputNome: '',
-                    inputMesa: '',
-
-                },
-
-                computed: { // propriedades computadas // reativos
-                    pao() {
-                        switch (this.inputTipoPao) {
-                            case 'gergelim':
-                                return ['imagens/pao_gergelim_superior.png', 'imagens/pao_gergelim_inferior.png']
-                            case 'australiano':
-                                return ['imagens/pao_australiano_superior.png', 'imagens/pao_australiano_inferior.png']
-                            default:
-                                return ['imagens/padrao/pao_superior.png', 'imagens/padrao/pao_inferior.png']
-                        }
-
-                    },
-
-                    alface() {
-                        if (this.inputSalada.includes('alface')) {
-                            return 'imagens/alface.png'
-                        }
-
-                        return 'imagens/padrao/alface.png'
-                    },
-
-                    ketchup() {
-
-                        if (this.inputMolhos.includes('ketchup')) {
-                            return 'imagens/ketchup.png'
-                        }
-
-                        return 'imagens/padrao/molho.png'
-                    },
-
-                    mostarda() {
-
-                        if (this.inputMolhos.includes('mostarda')) {
-                            return 'imagens/mostarda.png'
-                        }
-
-                        return 'imagens/padrao/molho.png'
+                </div> <!-- Fim etapa 3 -->
 
 
-                    },
+            </div> <!-- fim ROW -->
+        </div> <!-- FIM APP -->
+    </div> <!-- FIM container -->
 
-                    maionese() {
+    <!-- instancia VUE -->
+    <script>
+        const vm = new Vue({
+            el: '#app',
 
-                        if (this.inputMolhos.includes('maionese')) {
-                            return 'imagens/maionese.png'
-                        }
+            data: {  // atributos // propriedades
+                inputTipoPao: '', /* RADIO = OBRIGATÓRIO */
+                inputSalada: [], /* CHECKBOX = NAO OBRIGATORIO/OPCIONAL */
+                inputMolhos: [],
+                inputBurger: '',
+                etapa: 1,
+                inputNome: '',
+                inputMesa: '',
 
-                        return 'imagens/padrao/molho.png'
+            },
 
-                    },
-
-                    burger() {
-                        switch (this.inputBurger) {
-                            case 'bovino':
-                                return 'imagens/bovino.png'
-
-                            case 'frango':
-                                return 'imagens/frango.png'
-
-                            case 'vegetal':
-                                return 'imagens/soja.png'
-
-                            default:
-                                return 'imagens/padrao/hamburguer.png'
-
-                        }
-
-                    },
+            computed: { // propriedades computadas // reativos
+                pao() {
+                    switch (this.inputTipoPao) {
+                        case 'gergelim':
+                            return ['imagens/pao_gergelim_superior.png', 'imagens/pao_gergelim_inferior.png']
+                        case 'australiano':
+                            return ['imagens/pao_australiano_superior.png', 'imagens/pao_australiano_inferior.png']
+                        default:
+                            return ['imagens/padrao/pao_superior.png', 'imagens/padrao/pao_inferior.png']
+                    }
 
                 },
 
-                methods: {
-                    fazerPedido() {
-                        //se Pão e Carne forem Selecionados
-                        if (this.inputTipoPao && this.inputBurger) {
-                            this.etapa = 2
-                            //avança para etapa 2 
-                        }
-                        else {
-                            alert('Você precisa selecionar no minino um pão e uma carne')
+                alface() {
+                    if (this.inputSalada.includes('alface')) {
+                        return 'imagens/alface.png'
+                    }
+
+                    return 'imagens/padrao/alface.png'
+                },
+
+                ketchup() {
+
+                    if (this.inputMolhos.includes('ketchup')) {
+                        return 'imagens/ketchup.png'
+                    }
+
+                    return 'imagens/padrao/molho.png'
+                },
+
+                mostarda() {
+
+                    if (this.inputMolhos.includes('mostarda')) {
+                        return 'imagens/mostarda.png'
+                    }
+
+                    return 'imagens/padrao/molho.png'
+
+
+                },
+
+                maionese() {
+
+                    if (this.inputMolhos.includes('maionese')) {
+                        return 'imagens/maionese.png'
+                    }
+
+                    return 'imagens/padrao/molho.png'
+
+                },
+
+                burger() {
+                    switch (this.inputBurger) {
+                        case 'bovino':
+                            return 'imagens/bovino.png'
+
+                        case 'frango':
+                            return 'imagens/frango.png'
+
+                        case 'vegetal':
+                            return 'imagens/soja.png'
+
+                        default:
+                            return 'imagens/padrao/hamburguer.png'
+
+                    }
+
+                },
+
+            },
+
+            methods: {
+                fazerPedido() {
+                    //se Pão e Carne forem Selecionados
+                    if (this.inputTipoPao && this.inputBurger) {
+                        this.etapa = 2
+                        //avança para etapa 2 
+                    }
+                    else {
+                        alert('Você precisa selecionar no minino um pão e uma carne')
 
 
 
-                        }
-                    },
-                    confirmarPedido() {
-                        if(this.inputNome && this.inputMesa) {
-                            this.etapa = 3             
-                        }
-                        else {
-                            alert('Você precisa informar o seu Nome e a Mesa.')
-                        }
-                    },
+                    }
+                },
+                confirmarPedido() {
+                    if (this.inputNome && this.inputMesa) {
+                        this.etapa = 3
+                    }
+                    else {
+                        alert('Você precisa informar o seu Nome e a Mesa.')
+                    }
                 },
 
 
-            })
-        </script>
+                novoPedido() {
+
+                    this.etapa = 1
+
+                    this.inputTipoPao = ''
+                    this.inputSalada = []
+                    this.inputMolhos = []
+                    this.inputBurger = ''
+                    this.inputNome = ''
+                    this.inputMesa = ''
+                },
+            },
+            watch: {
+                etapa(novoValor) {
+                    if (novoValor == 1) {
+                        clearTimeout(this.novoPedidoAssicrono)
+                    }
+                }
+            },
+
+
+        })
+    </script>
 
 </body>
 
